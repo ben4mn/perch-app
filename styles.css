@@ -1,0 +1,722 @@
+/* Perch website. Every value below comes from the tokens in :root. */
+
+/* Local stand-ins for Newsreader while the webfont loads, sized to take about the same width,
+   so headings do not reflow when it arrives. Newsreader's optical sizes run wider as they grow,
+   so the large heading gets its own. */
+@font-face {
+  font-family: "Newsreader Fallback";
+  src: local("Georgia"), local("Times New Roman");
+  size-adjust: 95%;
+}
+
+@font-face {
+  font-family: "Newsreader Fallback Large";
+  src: local("Georgia"), local("Times New Roman");
+  size-adjust: 98%;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* Color, light */
+  --canvas: #F6F1EA;
+  --surface: #FBF8F3;
+  --ink: #23202B;
+  --ink-muted: #5E586B;
+  --ink-faint: #706A7C; /* #8A8496 in the brief; darkened to reach 4.5:1 on canvas */
+  --line: #E4DED3;
+  --notch: #0E0D12;
+  --notch-edge: #0E0D12; /* the notch's outline: invisible on the light canvas */
+  --on-notch: #F4EFE6;
+  --on-notch-muted: #B8B2C4;
+  --dusk: #55506A;
+  --dusk-light: #9A94B0;
+  --accent: #A8501F;
+  --on-accent: #F6F1EA;
+  --ember: #E8B58A;
+  --focus: var(--dusk);
+  --focus-on-notch: var(--dusk-light);
+  --shadow: 0 30px 80px -30px rgb(35 32 43 / 0.35);
+  --accent-hover: color-mix(in srgb, var(--accent) 86%, var(--ink));
+
+  /* Type */
+  --font-display: "Newsreader", "Newsreader Fallback", Georgia, serif;
+  --font-display-large: "Newsreader", "Newsreader Fallback Large", Georgia, serif;
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-display: 400;
+  --weight-strong: 600;
+  /* Fluid between 375 and 1280 px wide */
+  --text-h1: clamp(2.5rem, 1.5675rem + 3.978vw, 4.75rem);
+  --text-h2: clamp(1.875rem, 1.4606rem + 1.768vw, 2.875rem);
+  --text-h3: clamp(1.25rem, 1.1464rem + 0.442vw, 1.5rem);
+  --text-lede: clamp(1.1875rem, 1.1098rem + 0.3315vw, 1.375rem);
+  --text-body: 1.0625rem;
+  --text-small: 0.875rem;
+  --lh-h1: 1.05;
+  --lh-h2: 1.12;
+  --lh-h3: 1.3;
+  --lh-lede: 1.5;
+  --lh-body: 1.6;
+  --lh-small: 1.5;
+  --measure: 31em; /* about 60 characters of body text */
+
+  /* Space */
+  --s-4: 4px;
+  --s-8: 8px;
+  --s-12: 12px;
+  --s-16: 16px;
+  --s-24: 24px;
+  --s-32: 32px;
+  --s-48: 48px;
+  --s-72: 72px;
+  --s-112: 112px;
+  --s-160: 160px;
+  --section-gap: clamp(var(--s-112), 92.11px + 5.304vw, var(--s-160));
+  --block-gap: clamp(var(--s-72), 55.43px + 4.42vw, var(--s-112));
+
+  /* Grid */
+  --max: 1200px;
+  --margin: clamp(var(--s-24), 14.055px + 2.652vw, var(--s-48));
+  --gutter: var(--s-24);
+
+  /* Shape */
+  --hairline: 1px;
+  --r-control: 10px;
+  --r-media: 14px;
+  --r-bezel: 18px;
+  --bezel: 6px;
+  --r-screen: calc(var(--r-bezel) - var(--bezel));
+  --focus-width: 2px;
+  --focus-offset: 2px;
+
+  /* The notch */
+  --notch-height: 40px;
+  --notch-radius: 14px;
+  --notch-shoulder: 8px;
+  --notch-swell-x: 6px; /* each side: 12 px wider in all */
+  --notch-swell-y: 3px;
+  --notch-link-height: 28px;
+  --mark-size: 22px;
+  --notch-crop: 0.88; /* share of a notch clip's width shown on a phone */
+  --strip-crop: 0.5; /* the same for the strip */
+  --icon-size: 16px;
+  --icon-stroke: 2;
+
+  /* Motion */
+  --swell-duration: 200ms;
+  --swell-ease: cubic-bezier(0.3, 1.3, 0.5, 1); /* a short spring, like the app's peek */
+  --quick: 150ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #1B1922;
+    --surface: #24212E;
+    --ink: #F4EFE6;
+    --ink-muted: #B8B2C4;
+    --ink-faint: #878198;
+    --line: #37334A;
+    --notch: #0A090D;
+    --notch-edge: #37334A;
+    --accent: #E8B58A;
+    --on-accent: #1B1922;
+    --focus: var(--dusk-light);
+    --shadow: 0 30px 80px -30px rgb(10 9 13 / 0.6);
+  }
+}
+
+/* Base */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--notch-height) + var(--s-24));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, p, figure, ul, ol { margin: 0; }
+
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-optical-sizing: auto;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h1 { font-family: var(--font-display-large); font-size: var(--text-h1); line-height: var(--lh-h1); }
+h2 { font-size: var(--text-h2); line-height: var(--lh-h2); }
+
+h3 {
+  font-size: var(--text-h3);
+  line-height: var(--lh-h3);
+  font-weight: var(--weight-strong);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+p {
+  max-width: var(--measure);
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+
+code { font-family: var(--font-mono); }
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: var(--hairline);
+  text-underline-offset: 0.2em;
+}
+
+a:hover { text-decoration-thickness: var(--focus-width); }
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus);
+  outline-offset: var(--focus-offset);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--icon-stroke);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Skip link */
+
+.skip-link {
+  position: fixed;
+  top: var(--s-12);
+  left: var(--s-12);
+  z-index: 20;
+  padding: var(--s-8) var(--s-16);
+  background: var(--surface);
+  color: var(--ink);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--r-control);
+  font-size: var(--text-small);
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--s-24)));
+}
+
+.skip-link:focus { transform: none; }
+
+/* Layout */
+
+.wrap {
+  width: min(100% - 2 * var(--margin), var(--max));
+  margin-inline: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+.grid > * { grid-column: 1 / -1; }
+
+.section { padding-top: var(--section-gap); }
+.block { margin-top: var(--block-gap); }
+
+/* Heading and text above a wide clip: heading in the left 5 columns, text in the right 6. */
+.split { row-gap: var(--s-16); margin-bottom: var(--s-48); }
+
+/* A window clip with its text beside it. */
+.side { row-gap: var(--s-32); align-items: start; }
+.side-text { display: grid; gap: var(--s-16); }
+
+@media (min-width: 960px) {
+  .split .split-head { grid-column: 1 / span 5; }
+  .split .split-text { grid-column: 7 / -1; }
+  .split { margin-bottom: var(--s-72); }
+  .side .side-text { grid-column: 1 / span 4; }
+  .side .side-clip { grid-column: 5 / -1; }
+}
+
+/* The notch: the page's navigation */
+
+.site-head {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.notch {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+  height: var(--notch-height);
+  padding-inline: var(--s-12) var(--s-8);
+  pointer-events: auto;
+}
+
+.notch-shape {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--notch);
+  border-radius: 0 0 var(--notch-radius) var(--notch-radius);
+  transition:
+    inset var(--swell-duration) var(--swell-ease),
+    border-radius var(--swell-duration) var(--swell-ease);
+}
+
+/* The concave shoulders where the notch meets the top edge, as the app draws them. */
+.notch-shape::before,
+.notch-shape::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: var(--notch-shoulder);
+  height: var(--notch-shoulder);
+  background: inherit;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M0 0H10V10A10 10 0 0 0 0 0Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M0 0H10V10A10 10 0 0 0 0 0Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+}
+
+.notch-shape::before { right: 100%; }
+.notch-shape::after { left: 100%; transform: scaleX(-1); }
+
+.notch:hover .notch-shape,
+.notch:focus-within .notch-shape {
+  inset: 0 calc(-1 * var(--notch-swell-x)) calc(-1 * var(--notch-swell-y));
+  border-radius: 0 0 calc(var(--notch-radius) + var(--notch-swell-y)) calc(var(--notch-radius) + var(--notch-swell-y));
+}
+
+@media (prefers-color-scheme: dark) {
+  /* A 1 px outline that follows the whole shape, shoulders included. */
+  .notch-shape {
+    filter:
+      drop-shadow(var(--hairline) 0 0 var(--notch-edge))
+      drop-shadow(calc(-1 * var(--hairline)) 0 0 var(--notch-edge))
+      drop-shadow(0 var(--hairline) 0 var(--notch-edge));
+  }
+}
+
+.notch :focus-visible { outline-color: var(--focus-on-notch); }
+
+.notch-mark {
+  display: grid;
+  place-items: center;
+  width: var(--notch-link-height);
+  height: var(--notch-link-height);
+  border-radius: var(--r-control);
+}
+
+.mark {
+  display: block;
+  width: var(--mark-size);
+  height: var(--mark-size);
+}
+
+.mark-tile { fill: var(--dusk); }
+.mark-letter { fill: var(--on-notch); }
+.mark-hole { fill: var(--notch); }
+.mark-light { fill: var(--ember); }
+
+.notch-links {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: 0;
+  list-style: none;
+}
+
+.notch-links a {
+  display: flex;
+  align-items: center;
+  height: var(--notch-link-height);
+  padding-inline: var(--s-8);
+  border-radius: var(--r-control);
+  color: var(--on-notch-muted);
+  font-size: var(--text-small);
+  line-height: 1;
+  text-decoration: none;
+  transition: color var(--quick) var(--ease-out);
+}
+
+.notch-links a:hover { color: var(--on-notch); }
+
+@media (max-width: 719px) {
+  .notch-links li:not(:last-child) { display: none; }
+}
+
+/* Hero */
+
+.hero { padding-top: calc(var(--notch-height) + var(--block-gap)); }
+
+.hero .grid { row-gap: var(--s-32); }
+
+.lede {
+  font-size: var(--text-lede);
+  line-height: var(--lh-lede);
+  color: var(--ink);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-12) var(--s-16);
+}
+
+.hero-actions .small {
+  flex-basis: 100%;
+  max-width: none;
+  font-size: var(--text-small);
+  line-height: var(--lh-small);
+}
+
+.hero-clip { margin-top: var(--s-16); }
+
+@media (min-width: 960px) {
+  .hero-title { grid-column: 1 / span 10; }
+  .lede { grid-column: 1 / span 6; }
+  .hero-actions {
+    grid-column: 8 / -1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+  .hero-actions .small { flex-basis: auto; }
+  .hero-actions .button { align-self: flex-start; }
+  .hero-clip { margin-top: var(--s-48); }
+}
+
+/* Buttons and the command */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--s-48);
+  padding-inline: var(--s-24);
+  border-radius: var(--r-control);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: var(--text-body);
+  font-weight: var(--weight-strong);
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color var(--quick) var(--ease-out);
+}
+
+.button:hover { background: var(--accent-hover); }
+
+.command {
+  display: flex;
+  align-items: center;
+  gap: var(--s-8);
+  min-height: var(--s-48);
+  padding: var(--s-4) var(--s-4) var(--s-4) var(--s-16);
+  background: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--r-control);
+}
+
+.command-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--ink);
+  font-size: var(--text-small);
+  line-height: var(--lh-small);
+}
+
+.command-copy {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: calc(var(--s-48) - 2 * var(--s-4) - 2 * var(--hairline));
+  height: calc(var(--s-48) - 2 * var(--s-4) - 2 * var(--hairline));
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--r-control) - var(--s-4));
+  background: transparent;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: color var(--quick) var(--ease-out), background-color var(--quick) var(--ease-out);
+}
+
+.command-copy:hover { color: var(--ink); background: var(--canvas); }
+.command-copy > * { grid-area: 1 / 1; }
+.command-copy .icon-done { visibility: hidden; }
+.command-copy[data-state="copied"] .icon-copy { visibility: hidden; }
+.command-copy[data-state="copied"] .icon-done { visibility: visible; }
+
+/* Clips */
+
+/* The frame, then one row under it: the caption, if there is one, at the left and the
+   pause and play control at the right. */
+.clip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--s-24);
+  row-gap: var(--s-12);
+  align-items: baseline;
+}
+
+.clip > .frame { grid-column: 1 / -1; }
+
+.frame { position: relative; }
+
+.frame-bezel {
+  padding: calc(var(--bezel) - var(--hairline));
+  background: var(--notch);
+  border: var(--hairline) solid var(--notch-edge);
+  border-radius: var(--r-bezel);
+  box-shadow: var(--shadow);
+}
+
+.frame-window {
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--r-media);
+  box-shadow: var(--shadow);
+}
+
+.screen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: var(--r-screen);
+  background: var(--surface);
+}
+
+.frame-window .screen { border-radius: calc(var(--r-media) - var(--hairline)); }
+
+.clip-video,
+.clip-still {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
+}
+
+.ratio-notch { aspect-ratio: 2010 / 760; }
+.ratio-strip { aspect-ratio: 2010 / 300; }
+.ratio-window { aspect-ratio: 1920 / 1238; }
+
+.clip-still {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+/* On a phone a notch clip shows the middle of its stand-in desktop, anchored to the top
+   center where the panel hangs. The open panel is 85% of the desktop's width, so the crop
+   keeps 88% of it and the panel is never cut. The strip's prompt is narrower (42%, centered
+   under the notch), so the strip keeps the middle half and the top three quarters. */
+@media (max-width: 719px) {
+  .screen-notch { aspect-ratio: 2010 / 760; }
+  .screen-strip { aspect-ratio: 1005 / 225; }
+
+  .screen-notch .clip-video,
+  .screen-notch .clip-still,
+  .screen-strip .clip-video,
+  .screen-strip .clip-still {
+    position: absolute;
+    inset: 0 auto auto 50%;
+    max-width: none;
+    height: auto;
+    border-radius: 0;
+    transform: translateX(-50%);
+  }
+
+  .screen-notch .clip-video,
+  .screen-notch .clip-still { width: calc(100% / var(--notch-crop)); }
+
+  .screen-strip .clip-video,
+  .screen-strip .clip-still { width: calc(100% / var(--strip-crop)); }
+}
+
+.clip-toggle {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  display: inline-block;
+  /* The word lines up with the frame's right edge; the hover background reaches past it. */
+  margin-right: calc(-1 * var(--s-8));
+  padding: var(--s-4) var(--s-8);
+  border: 0;
+  border-radius: var(--r-control);
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: inherit;
+  font-size: var(--text-small);
+  line-height: var(--lh-small);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--quick) var(--ease-out), color var(--quick) var(--ease-out);
+}
+
+.clip-toggle:hover,
+.clip-toggle:focus-visible {
+  background: var(--line);
+  color: var(--ink);
+}
+
+.clip-toggle .icon {
+  width: var(--s-12);
+  height: var(--s-12);
+  margin-right: var(--s-8);
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+/* Both words take the same room, so the row does not move when one replaces the other. */
+.clip-toggle-label {
+  display: inline-block;
+  min-width: 5ch;
+  text-align: start;
+}
+
+.clip-toggle .icon-pause,
+.clip-toggle .label-pause,
+.clip-toggle[data-state="playing"] .icon-play,
+.clip-toggle[data-state="playing"] .label-play { display: none; }
+
+.clip-toggle[data-state="playing"] .icon-pause { display: inline-block; }
+.clip-toggle[data-state="playing"] .label-pause { display: inline; }
+
+.clip-note {
+  grid-column: 1;
+  grid-row: 2;
+  max-width: var(--measure);
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+
+.clip-note-small { font-size: var(--text-small); line-height: var(--lh-small); }
+
+/* Files */
+
+.files { row-gap: var(--s-48); align-items: start; }
+.files-text { display: grid; gap: var(--s-16); }
+
+.tree {
+  padding: var(--s-24) var(--s-32);
+  background: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--r-media);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  line-height: var(--lh-body);
+  color: var(--ink-muted);
+}
+
+.tree ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each level is indented one step; a long name that wraps hangs under itself. */
+.tree li {
+  padding-left: var(--s-16);
+  text-indent: calc(-1 * var(--s-16));
+}
+
+@media (max-width: 719px) {
+  .tree { padding: var(--s-16); }
+}
+.tree .is-folder { color: var(--ink); }
+.tree .is-folder > ul { color: var(--ink-muted); }
+
+@media (min-width: 960px) {
+  .files .files-text { grid-column: 1 / span 5; }
+  .files .tree {
+    grid-column: 7 / -1;
+    justify-self: start;
+    max-width: 100%;
+  }
+}
+
+/* Source */
+
+.split-text > p + p,
+.split-text > .steps + p { margin-top: var(--s-24); }
+
+.steps {
+  display: grid;
+  gap: var(--s-16);
+  margin-block: var(--s-32);
+  padding-left: var(--s-24);
+  color: var(--ink-muted);
+}
+
+.steps li { padding-left: var(--s-4); }
+.steps li::marker { color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+
+.steps code {
+  display: block;
+  margin-top: var(--s-4);
+  color: var(--ink);
+  font-size: var(--text-small);
+  line-height: var(--lh-small);
+}
+
+.split-text > .source-action { margin-top: var(--s-32); }
+
+/* Footer */
+
+.site-foot { padding-block: var(--section-gap) var(--s-48); }
+
+.foot-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8) var(--s-32);
+  font-size: var(--text-small);
+  line-height: var(--lh-small);
+}
+
+.foot-row p { color: var(--ink-faint); }
+
+@media (min-width: 720px) {
+  .foot-note { margin-right: auto; }
+}
+
+/* Motion */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perch: notes and tasks in your Mac's notch</title>
+<meta name="description" content="Perch is an open-source Mac app for notes and tasks. It lives in the notch, keeps everything as plain Markdown in a Git repository you own, and lets your AI agent work in the same notebook.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F6F1EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1B1922" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://ben4mn.github.io/perch-app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Perch">
+<meta property="og:title" content="Perch: notes and tasks in your Mac's notch">
+<meta property="og:description" content="Perch is an open-source Mac app for notes and tasks. It lives in the notch, keeps everything as plain Markdown in a Git repository you own, and lets your AI agent work in the same notebook.">
+<meta property="og:url" content="https://ben4mn.github.io/perch-app/">
+<meta property="og:image" content="https://ben4mn.github.io/perch-app/media/notch-open-poster.jpg">
+<meta property="og:image:width" content="2010">
+<meta property="og:image:height" content="760">
+<meta property="og:image:alt" content="The Perch notch open on a Mac: today's tasks, a notepad and the agents at work in the notebook.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Perch: notes and tasks in your Mac's notch">
+<meta name="twitter:description" content="Perch is an open-source Mac app for notes and tasks. It lives in the notch, keeps everything as plain Markdown in a Git repository you own, and lets your AI agent work in the same notebook.">
+<meta name="twitter:image" content="https://ben4mn.github.io/perch-app/media/notch-open-poster.jpg">
+<meta name="twitter:image:alt" content="The Perch notch open on a Mac: today's tasks, a notepad and the agents at work in the notebook.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..500&amp;display=swap">
+<link rel="preload" as="image" href="media/notch-open-poster.jpg" media="(prefers-color-scheme: light)" fetchpriority="high">
+<link rel="preload" as="image" href="media/notch-open-dark-poster.jpg" media="(prefers-color-scheme: dark)" fetchpriority="high">
+<link rel="stylesheet" href="styles.css">
+<noscript><style>.clip-toggle, .command-copy { display: none; }</style></noscript>
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <nav class="notch" aria-label="Sections">
+    <span class="notch-shape" aria-hidden="true"></span>
+    <a class="notch-mark" href="#top" aria-label="Perch, back to the top">
+      <svg class="mark" viewBox="0 0 1000 1000" aria-hidden="true" focusable="false">
+        <rect class="mark-tile" width="1000" height="1000" rx="225"/>
+        <path class="mark-letter" d="M290 738V310A118 118 0 0 1 408 192H548A190 190 0 0 1 548 572H440V738A75 75 0 0 1 290 738Z"/>
+        <rect class="mark-hole" x="432" y="324" width="196" height="116" rx="58"/>
+        <circle class="mark-light" cx="480" cy="382" r="17"/>
+      </svg>
+    </a>
+    <ul class="notch-links">
+      <li><a href="#notch">Notch</a></li>
+      <li><a href="#tasks">Tasks</a></li>
+      <li><a href="#notes">Notes</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#source">Source</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap grid">
+      <h1 class="hero-title" id="hero-title">Notes and tasks, kept in your Mac's notch.</h1>
+      <p class="lede">Perch is a Mac app for the things you need to do and the things you want to remember. Move the pointer to the notch and today is there. Everything it keeps is a plain Markdown file in a Git repository you own.</p>
+      <div class="hero-actions">
+        <a class="button" href="https://github.com/ben4mn/perch-app">Get the source</a>
+        <div class="command">
+          <code class="command-text" id="clone-command">git clone https://github.com/<wbr>ben4mn/perch-app.git</code>
+          <button class="command-copy" type="button" data-copy="clone-command" aria-label="Copy the command">
+            <svg class="icon icon-copy" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg>
+            <svg class="icon icon-done" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </button>
+        </div>
+        <p class="small">Open source. Built from source on an Apple silicon Mac with Xcode 27.</p>
+        <p class="visually-hidden" id="copy-status" aria-live="polite"></p>
+      </div>
+      <figure class="clip clip-wide hero-clip">
+        <div class="frame frame-bezel">
+          <div class="screen screen-notch">
+            <video class="clip-video ratio-notch" muted loop playsinline preload="none" width="2010" height="760"
+              data-eager data-title="The notch"
+              data-poster="media/notch-open-poster.jpg" data-poster-dark="media/notch-open-dark-poster.jpg"
+              aria-label="The closed notch with today's counts swells under the pointer, springs open into the Workspace cards, holds, and closes again.">
+              <source src="media/notch-open.mp4" data-src-dark="media/notch-open-dark.mp4" type="video/mp4">
+            </video>
+            <noscript><picture><source srcset="media/notch-open-dark-poster.jpg" media="(prefers-color-scheme: dark)"><img class="clip-still" src="media/notch-open-poster.jpg" width="2010" height="760" alt="The Perch notch open on a Mac desktop, showing today's tasks, a notepad and the agents in the notebook."></picture></noscript>
+          </div>
+        </div>
+        <button class="clip-toggle" type="button" aria-label="Play the clip: The notch">
+          <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+          <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+          <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+        </button>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="notch" aria-labelledby="notch-title">
+    <div class="wrap">
+      <div class="split grid">
+        <h2 class="split-head" id="notch-title">Today, under the pointer</h2>
+        <p class="split-text">The closed notch shows how much is left today. Hover and it opens: today's tasks, a notepad for the thing you just thought of, and what your agents are doing. Press Option-N from any app to add a task without leaving your work.</p>
+      </div>
+      <figure class="clip clip-wide">
+        <div class="frame frame-bezel">
+          <div class="screen screen-notch">
+            <video class="clip-video ratio-notch" muted loop playsinline preload="none" width="2010" height="760"
+              data-title="Notch modes" data-poster="media/notch-modes-poster.jpg"
+              aria-label="The open notch moving through its four modes: Workspace, Week, Insights and Clips.">
+              <source src="media/notch-modes.mp4" type="video/mp4">
+            </video>
+            <noscript><img class="clip-still" src="media/notch-modes-poster.jpg" width="2010" height="760" alt="The open notch moving through its four modes: Workspace, Week, Insights and Clips." loading="lazy"></noscript>
+          </div>
+        </div>
+        <button class="clip-toggle" type="button" aria-label="Play the clip: Notch modes">
+          <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+          <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+          <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+        </button>
+        <figcaption class="clip-note">Week shows the next seven days. Insights shows what you finished and when. Clips keeps what you copied. A focus timer can ride beside the notch while you work.</figcaption>
+      </figure>
+
+      <div class="block">
+        <div class="split grid">
+          <h3 class="split-head">Done is one click</h3>
+          <p class="split-text">Tick a task where you see it. The change is written to the task's file and committed with the rest.</p>
+        </div>
+        <figure class="clip clip-wide">
+          <div class="frame frame-bezel">
+            <div class="screen screen-notch">
+              <video class="clip-video ratio-notch" muted loop playsinline preload="none" width="2010" height="760"
+                data-title="Ticking a task in the notch" data-poster="media/notch-complete-poster.jpg"
+                aria-label="Two of today's tasks ticked from the open notch: the circle fills, the tick draws on, the title is struck through, and the row makes way for the next.">
+                <source src="media/notch-complete.mp4" type="video/mp4">
+              </video>
+              <noscript><img class="clip-still" src="media/notch-complete-poster.jpg" width="2010" height="760" alt="Two of today's tasks ticked from the open notch." loading="lazy"></noscript>
+            </div>
+          </div>
+          <button class="clip-toggle" type="button" aria-label="Play the clip: Ticking a task in the notch">
+            <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+            <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+            <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+          </button>
+        </figure>
+      </div>
+
+      <div class="block">
+        <div class="split grid">
+          <h3 class="split-head">It asks quietly</h3>
+          <p class="split-text">A reminder, a finished focus session or a question from an agent hangs below the notch with two answers. Nothing takes over your screen.</p>
+        </div>
+        <figure class="clip clip-wide">
+          <div class="frame frame-bezel">
+            <div class="screen screen-strip">
+              <video class="clip-video ratio-strip" muted loop playsinline preload="none" width="2010" height="300"
+                data-title="The closed notch at work" data-poster="media/notch-live-poster.jpg"
+                aria-label="The closed notch carrying things without opening: a reminder drops out of it, then an agent's question, then the focus timer rides beside it.">
+                <source src="media/notch-live.mp4" type="video/mp4">
+              </video>
+              <noscript><img class="clip-still" src="media/notch-live-poster.jpg" width="2010" height="300" alt="An agent's question hanging below the closed notch, with Later and Mark done." loading="lazy"></noscript>
+            </div>
+          </div>
+          <button class="clip-toggle" type="button" aria-label="Play the clip: The closed notch at work">
+            <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+            <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+            <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+          </button>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="clips" aria-labelledby="clips-title">
+    <div class="wrap">
+      <div class="split grid">
+        <h2 class="split-head" id="clips-title">The last day of your clipboard</h2>
+        <p class="split-text">Clips keeps what you copied, your screenshots, and files you drop on the notch. Click one to copy it again, or drag it out. It stays in memory only, nothing is kept longer than 24 hours, and items from password managers are skipped.</p>
+      </div>
+      <figure class="clip clip-wide">
+        <div class="frame frame-bezel">
+          <div class="screen screen-notch">
+            <video class="clip-video ratio-notch" muted loop playsinline preload="none" width="2010" height="760"
+              data-title="Clips" data-poster="media/clips-poster.jpg"
+              aria-label="The Clips pane in the notch: everything copied lately, then each kind on its own (text, links, pictures, files), and a card under the pointer.">
+              <source src="media/clips.mp4" type="video/mp4">
+            </video>
+            <noscript><img class="clip-still" src="media/clips-poster.jpg" width="2010" height="760" alt="The Clips pane in the notch, with everything copied lately." loading="lazy"></noscript>
+          </div>
+        </div>
+        <button class="clip-toggle" type="button" aria-label="Play the clip: Clips">
+          <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+          <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+          <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+        </button>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="tasks" aria-labelledby="tasks-title">
+    <div class="wrap">
+      <div class="side grid">
+        <div class="side-text">
+          <h2 id="tasks-title">Tasks are files</h2>
+          <p>Each task is a Markdown file with its dates, its owner and its notes. Perch shows them as Today, Upcoming, a list, a calendar or a board. Because they are files, they sync with Git, they outlive the app, and anything can read them.</p>
+        </div>
+        <figure class="clip side-clip">
+          <div class="frame frame-window">
+            <div class="screen">
+              <video class="clip-video ratio-window" muted loop playsinline preload="none" width="1920" height="1238"
+                data-title="Tasks" data-poster="media/tasks-poster.jpg"
+                aria-label="The main window on the demo notebook, through Today, Upcoming, List, Calendar and Board.">
+                <source src="media/tasks.mp4" type="video/mp4">
+              </video>
+              <noscript><img class="clip-still" src="media/tasks-poster.jpg" width="1920" height="1238" alt="The main window on the demo notebook, showing Today." loading="lazy"></noscript>
+            </div>
+          </div>
+          <button class="clip-toggle" type="button" aria-label="Play the clip: Tasks">
+            <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+            <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+            <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+          </button>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="notes" aria-labelledby="notes-title">
+    <div class="wrap">
+      <div class="side grid">
+        <div class="side-text">
+          <h2 id="notes-title">Notes that draw what you wrote</h2>
+          <p>Write Markdown and read it properly set: tables, code, formulas, diagrams, sheet music, boards and whiteboards. Edit beside the preview, or just read.</p>
+        </div>
+        <figure class="clip side-clip">
+          <div class="frame frame-window">
+            <div class="screen">
+              <video class="clip-video ratio-window" muted loop playsinline preload="none" width="1920" height="1238"
+                data-title="Notes" data-poster="media/notes-poster.jpg"
+                aria-label="A client note in the reader with its drawing and tables, a note edited beside its preview, a tune written in ABC, and a whiteboard sketch.">
+                <source src="media/notes.mp4" type="video/mp4">
+              </video>
+              <noscript><img class="clip-still" src="media/notes-poster.jpg" width="1920" height="1238" alt="A client note in the reader, with its drawing and tables." loading="lazy"></noscript>
+            </div>
+          </div>
+          <button class="clip-toggle" type="button" aria-label="Play the clip: Notes">
+            <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+            <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+            <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+          </button>
+        </figure>
+      </div>
+
+      <div class="block side grid">
+        <div class="side-text">
+          <h3>Themes</h3>
+          <p>Perch comes with light and dark themes, and every color can be changed.</p>
+        </div>
+        <figure class="clip side-clip">
+          <div class="frame frame-window">
+            <div class="screen">
+              <video class="clip-video ratio-window" muted loop playsinline preload="none" width="1920" height="1238"
+                data-title="Themes" data-poster="media/themes-poster.jpg"
+                aria-label="The Today view crossfading through five of the built-in themes, light and dark.">
+                <source src="media/themes.mp4" type="video/mp4">
+              </video>
+              <noscript><img class="clip-still" src="media/themes-poster.jpg" width="1920" height="1238" alt="The Today view in one of the built-in themes." loading="lazy"></noscript>
+            </div>
+          </div>
+          <button class="clip-toggle" type="button" aria-label="Play the clip: Themes">
+            <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+            <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+            <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+          </button>
+        </figure>
+      </div>
+
+      <div class="block side grid">
+        <div class="side-text">
+          <h3>Tabs and split view</h3>
+          <p>Open notes and task views in tabs, or two side by side. This is an experiment you can turn on in Settings.</p>
+        </div>
+        <figure class="clip side-clip">
+          <div class="frame frame-window">
+            <div class="screen">
+              <video class="clip-video ratio-window" muted loop playsinline preload="none" width="1920" height="1238"
+                data-title="Tabs and split view" data-poster="media/tabs-split-poster.jpg"
+                aria-label="Today in one tab, a note opened in a second tab, then the calendar opened beside the note.">
+                <source src="media/tabs-split.mp4" type="video/mp4">
+              </video>
+              <noscript><img class="clip-still" src="media/tabs-split-poster.jpg" width="1920" height="1238" alt="Two tabs, with a note and the calendar side by side." loading="lazy"></noscript>
+            </div>
+          </div>
+          <button class="clip-toggle" type="button" aria-label="Play the clip: Tabs and split view">
+            <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+            <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+            <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+          </button>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="agents" aria-labelledby="agents-title">
+    <div class="wrap">
+      <div class="split grid">
+        <h2 class="split-head" id="agents-title">Your agent works in the same notebook</h2>
+        <p class="split-text">Perch comes with the Perch Relay, a small MCP server. Point Claude Code or another agent at it, and the agent can read your notes, add tasks, and propose that a task is done, with its reasons. You confirm. Every change an agent makes is a Git commit under its own name, so it can be undone.</p>
+      </div>
+      <figure class="clip clip-wide">
+        <div class="frame frame-bezel">
+          <div class="screen screen-notch">
+            <video class="clip-video ratio-notch" muted loop playsinline preload="none" width="2010" height="760"
+              data-title="Agents in the notebook" data-poster="media/agents-poster.jpg"
+              aria-label="An agent asks from the closed notch whether a task is done, and the open notch shows who is here and what waits to be ticked.">
+              <source src="media/agents.mp4" type="video/mp4">
+            </video>
+            <noscript><img class="clip-still" src="media/agents-poster.jpg" width="2010" height="760" alt="The open notch, showing the agents in the notebook and a task waiting to be ticked." loading="lazy"></noscript>
+          </div>
+        </div>
+        <button class="clip-toggle" type="button" aria-label="Play the clip: Agents in the notebook">
+          <svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+          <svg class="icon icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5.5h3v13H7zM14 5.5h3v13h-3z"/></svg>
+          <span class="clip-toggle-label"><span class="label-play">Play</span><span class="label-pause">Pause</span></span>
+        </button>
+        <figcaption class="clip-note clip-note-small">An agent asks from the closed notch whether a task is done, and the open notch shows who is here and what waits to be ticked.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="files" aria-labelledby="files-title">
+    <div class="wrap">
+      <div class="files grid">
+        <div class="files-text">
+          <h2 id="files-title">Plain files in a repository you own</h2>
+          <p>A Perch notebook is a folder. Notes are Markdown. Each area has a Tasks folder of Markdown files. Boards and whiteboards are in open formats. If the folder is a Git repository, Perch commits as you work and pushes to its remote. There is no Perch server and no Perch account.</p>
+        </div>
+        <div class="tree" role="group" aria-label="Some of the files in the demo notebook">
+          <ul>
+            <li class="is-folder">notebook/
+              <ul>
+                <li class="is-folder">Daily/</li>
+                <li class="is-folder">Home/</li>
+                <li class="is-folder">Learning/</li>
+                <li class="is-folder">Studio/
+                  <ul>
+                    <li class="is-folder">Clients/
+                      <ul>
+                        <li>Okafor garden room.md</li>
+                      </ul>
+                    </li>
+                    <li class="is-folder">Tasks/
+                      <ul>
+                        <li>Renew the van insurance t8nd4x7v.md</li>
+                        <li>Weekly check-in with Tomas t9bk2y6r.md</li>
+                      </ul>
+                    </li>
+                    <li>Lindqvist floor plan.excalidraw</li>
+                    <li>Studio board.kanban.md</li>
+                    <li>Suppliers.md</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="source" aria-labelledby="source-title">
+    <div class="wrap">
+      <div class="split grid">
+        <h2 class="split-head" id="source-title">Open source, and meant to be changed</h2>
+        <div class="split-text">
+          <p>Perch is one person's app, published so you can make it yours. The repository carries what a coding agent needs: how the code is laid out, how to build and test it, and what was learned the hard way. A demo notebook is included, so there is something to look at on first run.</p>
+          <ol class="steps">
+            <li>Clone it: <code>git clone https://github.com/<wbr>ben4mn/perch-app.git</code></li>
+            <li>Open it in Claude Code: <code>cd perch-app &amp;&amp; claude</code></li>
+            <li>Ask: <code>Build Perch and open the demo notebook.</code></li>
+          </ol>
+          <p>Perch is a personal project. There is no download and it is not notarized: you build it from source. It needs an Apple silicon Mac and Xcode 27. The iPhone app is in the source too.</p>
+          <p class="source-action"><a class="button" href="https://github.com/ben4mn/perch-app">Get the source</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-row">
+    <p class="foot-note">Every name and detail in the demo notebook is invented.</p>
+    <p>MIT license</p>
+    <p><a href="https://github.com/ben4mn/perch-app">Source on GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

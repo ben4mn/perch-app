@@ -1,0 +1,403 @@
+{
+  "generated": "2026-11-12T13:02:53-06:00",
+  "notebookDate": "2026-11-12",
+  "note": "Every name, task and note in these clips is invented (Demo/README.md). Each clip loops: it ends on its first picture.",
+  "scenes": [
+    {
+      "id": "notch-open",
+      "title": "The notch",
+      "description": "The closed notch with today's counts swells under the pointer, springs open into the Workspace cards, holds, and closes again.",
+      "appearance": "light",
+      "readme": true,
+      "width": 2010,
+      "height": 760,
+      "fps": 60,
+      "frames": 405,
+      "duration": 6.75,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "notch-open.mp4",
+          "bytes": 438692
+        },
+        "webm": {
+          "path": "notch-open.webm",
+          "bytes": 316194
+        },
+        "poster": {
+          "path": "notch-open-poster.jpg",
+          "bytes": 203894
+        },
+        "gif": {
+          "path": "notch-open.gif",
+          "bytes": 797217
+        }
+      },
+      "sourcePixels": [
+        2010,
+        760
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "notch-open-dark",
+      "title": "The notch (dark)",
+      "description": "The closed notch with today's counts swells under the pointer, springs open into the Workspace cards, holds, and closes again.",
+      "appearance": "dark",
+      "readme": false,
+      "width": 2010,
+      "height": 760,
+      "fps": 60,
+      "frames": 405,
+      "duration": 6.75,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "notch-open-dark.mp4",
+          "bytes": 377399
+        },
+        "webm": {
+          "path": "notch-open-dark.webm",
+          "bytes": 292595
+        },
+        "poster": {
+          "path": "notch-open-dark-poster.jpg",
+          "bytes": 201827
+        }
+      },
+      "sourcePixels": [
+        2010,
+        760
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "notch-modes",
+      "title": "Notch modes",
+      "description": "The open notch moving through its four modes: Workspace, Week, Insights and Clips.",
+      "appearance": "light",
+      "readme": false,
+      "width": 2010,
+      "height": 760,
+      "fps": 60,
+      "frames": 564,
+      "duration": 9.4,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "notch-modes.mp4",
+          "bytes": 587010
+        },
+        "webm": {
+          "path": "notch-modes.webm",
+          "bytes": 822494
+        },
+        "poster": {
+          "path": "notch-modes-poster.jpg",
+          "bytes": 148326
+        }
+      },
+      "sourcePixels": [
+        2010,
+        760
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "notch-complete",
+      "title": "Ticking a task in the notch",
+      "description": "Two of today's tasks ticked from the open notch: the circle fills, the tick draws on, the title is struck through, sparks fly, and the row makes way for the next.",
+      "appearance": "light",
+      "readme": false,
+      "width": 2010,
+      "height": 760,
+      "fps": 60,
+      "frames": 483,
+      "duration": 8.05,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "notch-complete.mp4",
+          "bytes": 257032
+        },
+        "webm": {
+          "path": "notch-complete.webm",
+          "bytes": 236470
+        },
+        "poster": {
+          "path": "notch-complete-poster.jpg",
+          "bytes": 204540
+        }
+      },
+      "sourcePixels": [
+        2010,
+        760
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "notch-live",
+      "title": "The closed notch at work",
+      "description": "The closed notch carrying things without opening: a reminder drops out of it, then an agent's question, then the focus timer rides beside it.",
+      "appearance": "light",
+      "readme": false,
+      "width": 2010,
+      "height": 300,
+      "fps": 60,
+      "frames": 780,
+      "duration": 13.0,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "notch-live.mp4",
+          "bytes": 152471
+        },
+        "webm": {
+          "path": "notch-live.webm",
+          "bytes": 163649
+        },
+        "poster": {
+          "path": "notch-live-poster.jpg",
+          "bytes": 42461
+        }
+      },
+      "sourcePixels": [
+        2010,
+        760
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "clips",
+      "title": "Clips",
+      "description": "The Clips pane in the notch: everything copied lately, then each kind on its own (text, links, pictures, files), and a card under the pointer.",
+      "appearance": "light",
+      "readme": false,
+      "width": 2010,
+      "height": 760,
+      "fps": 60,
+      "frames": 755,
+      "duration": 12.583,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "clips.mp4",
+          "bytes": 411064
+        },
+        "webm": {
+          "path": "clips.webm",
+          "bytes": 517077
+        },
+        "poster": {
+          "path": "clips-poster.jpg",
+          "bytes": 119199
+        }
+      },
+      "sourcePixels": [
+        2010,
+        760
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "tasks",
+      "title": "Tasks",
+      "description": "The main window on the demo notebook, through Today, Upcoming, List, Calendar and Board.",
+      "appearance": "light",
+      "readme": true,
+      "width": 1920,
+      "height": 1238,
+      "fps": 60,
+      "frames": 705,
+      "duration": 11.75,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "tasks.mp4",
+          "bytes": 1244602
+        },
+        "webm": {
+          "path": "tasks.webm",
+          "bytes": 1607178
+        },
+        "poster": {
+          "path": "tasks-poster.jpg",
+          "bytes": 250470
+        },
+        "gif": {
+          "path": "tasks.gif",
+          "bytes": 4010018
+        }
+      },
+      "sourcePixels": [
+        2480,
+        1600
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "notes",
+      "title": "Notes",
+      "description": "A client note in the reader, scrolled to its drawing and tables; a note being edited beside its preview; a tune written in ABC; and a whiteboard sketch.",
+      "appearance": "light",
+      "readme": true,
+      "width": 1920,
+      "height": 1238,
+      "fps": 60,
+      "frames": 732,
+      "duration": 12.2,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "notes.mp4",
+          "bytes": 1309543
+        },
+        "webm": {
+          "path": "notes.webm",
+          "bytes": 1973719
+        },
+        "poster": {
+          "path": "notes-poster.jpg",
+          "bytes": 217570
+        },
+        "gif": {
+          "path": "notes.gif",
+          "bytes": 3887200
+        }
+      },
+      "sourcePixels": [
+        2480,
+        1600
+      ],
+      "mp4Crf": 24
+    },
+    {
+      "id": "themes",
+      "title": "Themes",
+      "description": "The Today view crossfading through five of the built-in themes, light and dark.",
+      "appearance": "light",
+      "readme": false,
+      "width": 1920,
+      "height": 1238,
+      "fps": 60,
+      "frames": 660,
+      "duration": 11.0,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "themes.mp4",
+          "bytes": 759969
+        },
+        "webm": {
+          "path": "themes.webm",
+          "bytes": 921650
+        },
+        "poster": {
+          "path": "themes-poster.jpg",
+          "bytes": 241639
+        }
+      },
+      "sourcePixels": [
+        2480,
+        1600
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "tabs-split",
+      "title": "Tabs and split view",
+      "description": "The experimental tabs and split view: Today in one tab, a note opened in a second tab, then the calendar opened beside the note.",
+      "appearance": "light",
+      "readme": false,
+      "width": 1920,
+      "height": 1238,
+      "fps": 60,
+      "frames": 510,
+      "duration": 8.5,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "tabs-split.mp4",
+          "bytes": 871381
+        },
+        "webm": {
+          "path": "tabs-split.webm",
+          "bytes": 1264057
+        },
+        "poster": {
+          "path": "tabs-split-poster.jpg",
+          "bytes": 326945
+        }
+      },
+      "sourcePixels": [
+        2480,
+        1600
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "agents",
+      "title": "Agents in the notebook",
+      "description": "An AI agent working in the same notebook: it asks from the closed notch whether a task is done, and the open notch shows who is here and what waits to be ticked.",
+      "appearance": "light",
+      "readme": false,
+      "width": 2010,
+      "height": 760,
+      "fps": 60,
+      "frames": 609,
+      "duration": 10.15,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "agents.mp4",
+          "bytes": 507397
+        },
+        "webm": {
+          "path": "agents.webm",
+          "bytes": 380220
+        },
+        "poster": {
+          "path": "agents-poster.jpg",
+          "bytes": 59441
+        }
+      },
+      "sourcePixels": [
+        2010,
+        760
+      ],
+      "mp4Crf": 20
+    },
+    {
+      "id": "iphone",
+      "title": "On a folding phone",
+      "description": "The same notebook in the iPhone app's wide layout, as on an open folding phone held sideways: Today beside the week, the Board, and a note beside its folder. Drawn by the Mac's snapshot runner from the iPhone app's own layout, without the phone's status bar.",
+      "appearance": "light",
+      "readme": false,
+      "width": 1600,
+      "height": 1126,
+      "fps": 60,
+      "frames": 471,
+      "duration": 7.85,
+      "loops": true,
+      "files": {
+        "mp4": {
+          "path": "iphone.mp4",
+          "bytes": 808780
+        },
+        "webm": {
+          "path": "iphone.webm",
+          "bytes": 1235227
+        },
+        "poster": {
+          "path": "iphone-poster.jpg",
+          "bytes": 275187
+        }
+      },
+      "sourcePixels": [
+        1902,
+        1338
+      ],
+      "mp4Crf": 20
+    }
+  ]
+}
