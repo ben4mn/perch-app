@@ -1,0 +1,49 @@
+// Build values for Perch, used by every target and configuration (project.yml, configFiles).
+//
+// These are the public defaults. They build and run on any Apple silicon Mac with Xcode, with no Apple
+// developer account: the Mac app is signed to run locally (ad hoc), the bundle identifiers are neutral,
+// there is no GitHub sign-in and no update check. Perch then opens a notebook folder on this Mac.
+//
+// To change any of them for your own build, put the same names in Config/Private.xcconfig (it is
+// included at the end, and is optional). For example, to sign with your own team and sign in through
+// your own GitHub App:
+//
+//   PERCH_BUNDLE_ID_PREFIX = com.yourname
+//   DEVELOPMENT_TEAM = <your team ID>
+//   CODE_SIGN_STYLE[sdk=macosx*] = Automatic
+//   CODE_SIGN_IDENTITY[sdk=macosx*] = Apple Development
+//   PERCH_GITHUB_CLIENT_ID = <your GitHub App's client ID>
+
+// The start of every bundle identifier: <prefix>.perch for the Mac, <prefix>.perch.ios for the iPhone.
+PERCH_BUNDLE_ID_PREFIX = com.example
+// The iPhone app and its extensions share files through this app group.
+PERCH_APP_GROUP = group.$(PERCH_BUNDLE_ID_PREFIX).perch
+// The Keychain service Perch keeps its secrets under, on the Mac and the iPhone.
+PERCH_KEYCHAIN_SERVICE = $(PERCH_BUNDLE_ID_PREFIX).perch
+
+// Signing. No team: the Mac app is signed ad hoc, which runs on the Mac that built it.
+DEVELOPMENT_TEAM =
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_STYLE[sdk=macosx*] = Manual
+CODE_SIGN_IDENTITY[sdk=macosx*] = -
+
+// The client ID of a GitHub App to sign in through. Empty: no GitHub sign-in, and Perch opens a folder.
+PERCH_GITHUB_CLIENT_ID =
+// owner/name of a GitHub repository whose releases update the Mac app. Needs the GitHub sign-in.
+// Empty: no update checks.
+PERCH_UPDATE_REPOSITORY =
+// The areas a new notebook starts with, comma-separated, when their folders exist.
+PERCH_STANDARD_AREAS = Personal
+// The repository name to offer first when choosing a notebook from GitHub. Empty: the first one.
+PERCH_PREFERRED_NOTEBOOK =
+// The owner of your own tasks, and the author of what you write in a task's log.
+PERCH_OWNER_ID = me
+// Other owners a task can be given, comma-separated, besides those already in the notebook.
+PERCH_OTHER_OWNERS = pair, claude
+// Agents drawn with a mark of their own in the notch, as name=mark, comma-separated. The marks are claude
+// (Claude's spark), dot and house. Any other agent shows its initial.
+PERCH_AGENT_MARKS = claude=claude
+// The GitHub account the iPhone offers first for the notebook repository. Empty: the user types it.
+PERCH_DEFAULT_REPOSITORY_OWNER =
+
+#include? "Private.xcconfig"

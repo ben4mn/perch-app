@@ -1,0 +1,2 @@
+html, body, #root { margin: 0; height: 100%; }
+.loading { display: grid; place-items: center; height: 100%; font: 14px -apple-system, sans-serif; color: #70758a; }

@@ -1,0 +1,9 @@
+{
+  "name": "perch-mcp-bridge",
+  "version": "0.1.0",
+  "description": "Connects stdio-only MCP clients to a Perch Relay over HTTPS",
+  "type": "module",
+  "bin": { "perch-mcp-bridge": "bridge.mjs" },
+  "engines": { "node": ">=18" },
+  "license": "MIT"
+}

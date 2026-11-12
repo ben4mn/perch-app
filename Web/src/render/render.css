@@ -1,0 +1,394 @@
+/*
+  Perch reader. Everything visual hangs off the custom properties below. Swift sends the app's theme
+  through Perch.setAppearance, which sets these variables on the root element and marks it light or dark
+  with data-scheme. The values here are only what shows before that, or when a variable isn't sent.
+*/
+:root {
+  /* Type */
+  --perch-font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  --perch-font-heading: var(--perch-font-body);
+  --perch-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  --perch-font-size: 16px;
+  --perch-line-height: 1.65;
+  --perch-measure: 68ch;
+  --perch-text-align: start;
+  --perch-hyphens: manual;
+  /* Reading settings. Each default is what the reader did before the setting existed. */
+  --perch-paragraph-gap: .95em;
+  --perch-code-size: .86em;
+  --perch-code-white-space: pre;
+  --perch-code-overflow-wrap: normal;
+  --perch-link-decoration: underline;
+
+  /* Theme colors. The app's theme replaces all of these. */
+  --perch-bg: transparent;
+  --perch-text: #1c1e24;
+  --perch-text-secondary: color-mix(in srgb, var(--perch-text) 78%, transparent);
+  --perch-muted: #6a7080;
+  --perch-accent: #3257d3;
+  --perch-accent-text: #ffffff;
+  --perch-surface: color-mix(in srgb, var(--perch-text) 4.5%, transparent);
+  --perch-border: color-mix(in srgb, var(--perch-text) 13%, transparent);
+  --perch-code-bg: color-mix(in srgb, var(--perch-text) 4.5%, transparent);
+  --perch-info: #3257d3;
+  --perch-success: #17835f;
+  --perch-warning: #a96a00;
+  --perch-danger: #c0392f;
+
+  /* Worked out from the theme, so they suit whichever one is showing. */
+  --perch-surface-strong: color-mix(in srgb, var(--perch-text) 8%, transparent);
+  --perch-mark: color-mix(in srgb, var(--perch-warning) 30%, transparent);
+  --perch-missing: var(--perch-warning);
+  --perch-selection: color-mix(in srgb, var(--perch-accent) 26%, transparent);
+  --perch-tone-note: var(--perch-info);
+  --perch-tone-tip: var(--perch-success);
+  --perch-tone-warning: var(--perch-warning);
+  --perch-tone-danger: var(--perch-danger);
+  --perch-tone-quote: var(--perch-muted);
+  --perch-code-comment: var(--perch-muted);
+  --perch-code-added: var(--perch-success);
+  --perch-code-removed: var(--perch-danger);
+
+  /* Themes don't name these, so there is one set for light themes and one for dark. When a theme
+     arrives the page nudges each one, keeping its hue, until it has 4.5:1 against that theme's code
+     background (3.5:1 for comments); see codeTokenColors in color.js. */
+  --perch-tone-example: #7449c2;
+  --perch-code-keyword: #a2389b;
+  --perch-code-string: #1b7a4e;
+  --perch-code-number: #a35c00;
+  --perch-code-title: #2a5bd0;
+  --perch-code-type: #0f7c8c;
+
+  --perch-radius: 10px;
+  --perch-pad-inline: clamp(16px, 5vw, 48px);
+  --perch-pad-top: clamp(18px, 4vw, 40px);
+  color-scheme: light;
+}
+:root[data-scheme="dark"] {
+  --perch-text: #e4e6ec;
+  --perch-muted: #989fb0;
+  --perch-accent: #93a9ff;
+  --perch-accent-text: #10131c;
+  --perch-info: #93a9ff;
+  --perch-success: #5bd0a7;
+  --perch-warning: #e6b05c;
+  --perch-danger: #ff9086;
+  --perch-tone-example: #bfa4f5;
+  --perch-code-keyword: #e08bd8;
+  --perch-code-string: #7fd3a4;
+  --perch-code-number: #e8b46a;
+  --perch-code-title: #8fb0ff;
+  --perch-code-type: #6fcfdc;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html {
+  font-size: var(--perch-font-size);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--perch-bg);
+}
+body {
+  margin: 0;
+  background: transparent;
+  color: var(--perch-text);
+  font-family: var(--perch-font-body);
+  font-size: 1rem;
+  line-height: var(--perch-line-height);
+  -webkit-font-smoothing: antialiased;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+::selection { background: var(--perch-selection); }
+
+#root {
+  box-sizing: content-box;
+  max-width: var(--perch-measure);
+  margin: 0 auto;
+  padding: var(--perch-pad-top) max(var(--perch-pad-inline), env(safe-area-inset-right)) 96px max(var(--perch-pad-inline), env(safe-area-inset-left));
+  overflow-wrap: break-word;
+}
+#root > :first-child { margin-top: 0; }
+#root > :last-child { margin-bottom: 0; }
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--perch-font-heading);
+  font-weight: 680;
+  line-height: 1.22;
+  letter-spacing: -0.012em;
+  margin: 1.9em 0 .55em;
+  text-wrap: balance;
+}
+h1 { font-size: 1.9em; font-weight: 720; letter-spacing: -0.022em; margin-top: 1.4em; }
+h2 { font-size: 1.45em; letter-spacing: -0.018em; }
+h3 { font-size: 1.2em; }
+h4 { font-size: 1.04em; margin-top: 1.6em; }
+h5, h6 { font-size: .82em; letter-spacing: .05em; text-transform: uppercase; color: var(--perch-muted); margin-top: 1.6em; }
+h1 + h2, h2 + h3, h3 + h4 { margin-top: .9em; }
+
+/* Text */
+p { margin: 0 0 var(--perch-paragraph-gap); text-align: var(--perch-text-align); hyphens: var(--perch-hyphens); -webkit-hyphens: var(--perch-hyphens); text-wrap: pretty; }
+strong { font-weight: 650; }
+a { color: var(--perch-accent); text-decoration: var(--perch-link-decoration); text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+a:hover { text-decoration-color: currentColor; }
+a.wikilink { text-decoration: none; background: color-mix(in srgb, var(--perch-accent) 11%, transparent); padding: .05em .34em; border-radius: .35em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+a.wikilink:hover { background: color-mix(in srgb, var(--perch-accent) 20%, transparent); }
+a.wikilink.missing { color: var(--perch-missing); background: none; padding: 0; text-decoration: underline dashed; text-decoration-color: color-mix(in srgb, currentColor 60%, transparent); text-decoration-thickness: 1px; }
+a.mention { color: inherit; text-decoration: underline dotted color-mix(in srgb, var(--perch-accent) 70%, transparent); text-underline-offset: .22em; }
+a.link-card { display: block; text-decoration: none; border: 1px solid var(--perch-border); border-radius: var(--perch-radius); padding: .7em .9em; background: var(--perch-code-bg); overflow-wrap: anywhere; }
+a.link-card::before { content: attr(data-host); display: block; font-size: .78em; color: var(--perch-muted); margin-bottom: .1em; }
+mark { background: var(--perch-mark); color: inherit; padding: .05em .2em; border-radius: .25em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+/* A highlight in a colour the author chose. The page sets the tint so the text on it stays readable. */
+.tinted:not(mark) { padding: .05em .2em; border-radius: .25em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+u { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+[align="center"] { text-align: center; }
+[align="right"] { text-align: right; }
+[align="left"] { text-align: left; }
+/* In a centred or right-aligned block a list's markers travel with the text: they are written as the
+   first thing in each item, since a real marker stays at the left edge (or, placed inside, takes a line
+   of its own when the item holds a paragraph). */
+:is([align="center"], [align="right"]) :is(ul, ol) { list-style: none; padding-left: 0; }
+:is([align="center"], [align="right"]) li { padding-left: 0; }
+:is([align="center"], [align="right"]) ul > li:not(.task-list-item)::before { content: "•\00a0\00a0"; color: var(--perch-muted); }
+:is([align="center"], [align="right"]) ol > li:not(.task-list-item)::before { content: counter(list-item) ".\00a0\00a0"; color: var(--perch-muted); font-variant-numeric: tabular-nums; }
+:is([align="center"], [align="right"]) li > p:first-child { display: inline; }
+:is([align="center"], [align="right"]) li > p:first-child + * { margin-top: .4em; }
+/* Everything inside an aligned block follows it: paragraphs in quotes and list items too, not only its own children. */
+div[align] :is(p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, summary) { text-align: inherit; }
+/* A task's box sits beside its text wherever the text ends up, not out at the left margin. */
+:is([align="center"], [align="right"]) .task-list-item input[type="checkbox"] { position: relative; left: 0; top: .2em; margin-right: .45em; }
+:is([align="center"], [align="right"]) .table-wrap { width: fit-content; max-width: 100%; }
+[align="center"] .table-wrap { margin-left: auto; margin-right: auto; }
+[align="right"] .table-wrap { margin-left: auto; }
+del, s { color: var(--perch-muted); }
+sup, sub { font-size: .72em; line-height: 0; }
+kbd { font: .82em var(--perch-font-mono); border: 1px solid var(--perch-border); border-bottom-width: 2px; border-radius: .4em; padding: .08em .4em; background: var(--perch-code-bg); }
+abbr { text-decoration: underline dotted; }
+
+/* Lists */
+ul, ol { margin: 0 0 var(--perch-paragraph-gap); padding-left: 1.55em; }
+li { margin: .22em 0; padding-left: .15em; }
+li::marker { color: var(--perch-muted); }
+ol > li::marker { font-variant-numeric: tabular-nums; font-size: .92em; }
+li > ul, li > ol { margin: .22em 0 .3em; }
+li > p { margin-bottom: .4em; }
+ul ul { list-style-type: circle; }
+ul ul ul { list-style-type: square; }
+.task-list-item { list-style: none; position: relative; }
+.task-list-item input[type="checkbox"] {
+  -webkit-appearance: none; appearance: none;
+  position: absolute; left: -1.5em; top: calc((var(--perch-line-height) * 1em - 1.1em) / 2 + .06em);
+  width: 1.1em; height: 1.1em; margin: 0;
+  border: 1.5px solid color-mix(in srgb, var(--perch-text) 38%, transparent);
+  border-radius: .32em; background: transparent; cursor: pointer;
+  transition: background-color .14s ease, border-color .14s ease;
+}
+.task-list-item input[type="checkbox"]:hover { border-color: var(--perch-accent); }
+.task-list-item input[type="checkbox"]:checked { background: var(--perch-accent); border-color: var(--perch-accent); }
+/* The tick is drawn, not an image, so it can take the theme's color for text on the accent. */
+.task-list-item input[type="checkbox"]:checked::after {
+  content: ""; position: absolute; left: 31%; top: 10%; width: 28%; height: 56%;
+  border: solid var(--perch-accent-text); border-width: 0 .14em .14em 0; transform: rotate(40deg);
+}
+.task-list-item.checked { color: var(--perch-muted); }
+.task-list-item.checked > ul, .task-list-item.checked > ol { color: var(--perch-text); }
+
+/* Quotes and callouts */
+blockquote { margin: 0 0 var(--perch-paragraph-gap); padding: .1em 0 .1em 1.1em; border-left: 3px solid color-mix(in srgb, var(--perch-accent) 45%, transparent); color: var(--perch-text-secondary); }
+blockquote > :last-child { margin-bottom: 0; }
+.callout { --tone: var(--perch-tone-note); border: 1px solid color-mix(in srgb, var(--tone) 24%, transparent); border-radius: var(--perch-radius); padding: .7em 1em .75em; margin: 0 0 1em; background: color-mix(in srgb, var(--tone) 8%, transparent); }
+.callout-title { display: flex; align-items: baseline; gap: .5em; font-weight: 650; font-size: .95em; color: var(--tone); cursor: default; }
+.callout-title::before { content: ""; flex: none; width: .5em; height: .5em; border-radius: 50%; background: currentColor; transform: translateY(-.08em); }
+.callout-title > span { min-width: 0; }
+.callout-title code { color: inherit; }
+summary.callout-title { cursor: pointer; list-style: none; }
+summary.callout-title::-webkit-details-marker { display: none; }
+summary.callout-title::after { content: ""; flex: none; align-self: center; margin-left: auto; width: .45em; height: .45em; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .16s ease; }
+details[open] > summary.callout-title::after { transform: rotate(45deg); }
+.callout-body { margin-top: .35em; }
+.callout-body:empty { display: none; }
+.callout-body > :last-child { margin-bottom: 0; }
+.callout-tip, .callout-hint, .callout-success, .callout-check, .callout-done { --tone: var(--perch-tone-tip); }
+.callout-warning, .callout-caution, .callout-attention, .callout-question, .callout-help, .callout-faq, .callout-important { --tone: var(--perch-tone-warning); }
+.callout-danger, .callout-error, .callout-failure, .callout-fail, .callout-missing, .callout-bug { --tone: var(--perch-tone-danger); }
+.callout-example { --tone: var(--perch-tone-example); }
+.callout-quote, .callout-cite { --tone: var(--perch-tone-quote); }
+
+/* A fold written as raw HTML in the note: <details><summary>…</summary>…</details>. */
+details:not([class]) { margin: 0 0 var(--perch-paragraph-gap); padding: .45em .9em; border: 1px solid var(--perch-border); border-radius: var(--perch-radius); }
+details:not([class]) > summary { cursor: pointer; font-weight: 600; }
+details:not([class])[open] > summary { margin-bottom: .5em; }
+details:not([class]) > :last-child { margin-bottom: 0; }
+#root > div[align] { margin-bottom: var(--perch-paragraph-gap); }
+#root > div[align] > :last-child { margin-bottom: 0; }
+
+/* Code */
+code { font-family: var(--perch-font-mono); font-size: .875em; background: var(--perch-surface-strong); padding: .12em .36em; border-radius: .35em; overflow-wrap: anywhere; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+h1 code, h2 code, h3 code, h4 code, h5 code, h6 code { font-size: .9em; }
+/* In a table, code breaks at its spaces like any text but never mid-word: a long name widens its column
+   and the table scrolls, where breaking anywhere would let the column be squeezed to a sliver. */
+td code, th code { overflow-wrap: normal; }
+pre { margin: 0; padding: .85em 1em; overflow-x: auto; font-size: var(--perch-code-size); line-height: 1.55; -webkit-overflow-scrolling: touch; tab-size: 4; -moz-tab-size: 4; }
+pre code { display: block; font-size: 1em; background: none; padding: 0; border-radius: 0; overflow-wrap: var(--perch-code-overflow-wrap); white-space: var(--perch-code-white-space); -webkit-box-decoration-break: slice; box-decoration-break: slice; }
+/* When long lines scroll, the code is as wide as its longest line, so a diff's tinted lines reach the far edge. */
+:root:not([data-code-wrap]) pre code { width: max-content; min-width: 100%; }
+.code-block { position: relative; margin: 0 0 1em; border: 1px solid var(--perch-border); border-radius: var(--perch-radius); background: var(--perch-code-bg); overflow: hidden; }
+.code-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 2.1em; padding: .25em .45em 0 1em; font-size: .72em; letter-spacing: .03em; color: var(--perch-muted); user-select: none; -webkit-user-select: none; }
+/* The tag as the note wrote it: `C++`, `tsx`, or a language nobody has heard of. */
+.code-lang { font-family: var(--perch-font-mono); font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.code-copy { flex: none; font: inherit; letter-spacing: 0; color: var(--perch-muted); background: none; border: 0; border-radius: 6px; padding: .25em .6em; cursor: pointer; opacity: 0; transition: opacity .14s ease, background-color .14s ease; }
+.code-block:hover .code-copy, .code-copy:focus-visible, .code-copy.copied { opacity: 1; }
+.code-copy:hover { background: var(--perch-surface-strong); color: var(--perch-text); }
+.code-head + pre { padding-top: .3em; }
+/* A block with no tag has no header row. With a pointer, Copy appears over the corner on hover, on a
+   solid patch so it never mixes with the code. On a touch screen it would always be in the way of the
+   first line, so there the block gets the same header row as a tagged one. */
+.code-block.plain .code-head { position: absolute; top: .3em; right: .3em; min-height: 0; padding: 0; }
+.code-block.plain .code-copy { background: var(--perch-bg, transparent); box-shadow: 0 0 0 1px var(--perch-border); }
+.code-block.plain .code-copy:hover { background: var(--perch-surface-strong); }
+.code-block.plain .code-head + pre { padding-top: .85em; }
+@media (hover: none) {
+  .code-copy { opacity: 1; }
+  .code-block.plain .code-head { position: static; min-height: 2.1em; padding: .25em .45em 0 1em; justify-content: flex-end; }
+  .code-block.plain .code-copy { background: none; box-shadow: none; }
+  .code-block.plain .code-head + pre { padding-top: .3em; }
+}
+/* Code inside a quote or callout sits on that block's own tint. */
+blockquote .code-block, .callout .code-block { margin-bottom: .6em; }
+li > .code-block, li > .table-wrap, li > .diagram, li > .math-block { margin-top: .45em; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-built_in, .hljs-doctag, .hljs-meta .hljs-keyword { color: var(--perch-code-keyword); }
+.hljs-string, .hljs-regexp, .hljs-attribute, .hljs-symbol, .hljs-bullet, .hljs-char.escape_ { color: var(--perch-code-string); }
+.hljs-number, .hljs-variable, .hljs-template-variable, .hljs-link, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-variable.constant_ { color: var(--perch-code-number); }
+.hljs-comment, .hljs-quote, .hljs-meta { color: var(--perch-code-comment); font-style: italic; }
+.hljs-meta .hljs-string { color: var(--perch-code-string); font-style: normal; }
+.hljs-title, .hljs-section, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-attr, .hljs-property { color: var(--perch-code-title); }
+.hljs-type, .hljs-class .hljs-title, .hljs-title.class_, .hljs-tag, .hljs-params .hljs-type { color: var(--perch-code-type); }
+.hljs-tag .hljs-name { color: var(--perch-code-keyword); }
+.hljs-tag .hljs-attr { color: var(--perch-code-title); }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 650; }
+/* A diff: whole lines tinted, the way a review tool shows them. */
+.hljs-addition, .hljs-deletion { display: inline-block; width: 100%; }
+.hljs-addition { color: var(--perch-code-added); background: color-mix(in srgb, var(--perch-code-added) 13%, transparent); }
+.hljs-deletion { color: var(--perch-code-removed); background: color-mix(in srgb, var(--perch-code-removed) 13%, transparent); }
+
+/* Tables */
+.table-wrap { margin: 0 0 1em; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--perch-border); border-radius: var(--perch-radius); }
+table { border-collapse: collapse; width: 100%; font-size: .93em; line-height: 1.5; font-variant-numeric: tabular-nums; }
+th, td { padding: .5em .85em; text-align: left; vertical-align: top; border-bottom: 1px solid var(--perch-border); min-width: 5.5em; overflow-wrap: normal; word-break: normal; }
+th { font-weight: 650; font-size: .92em; color: var(--perch-text-secondary); background: var(--perch-code-bg); white-space: nowrap; }
+th + th, td + td { border-left: 1px solid color-mix(in srgb, var(--perch-border) 55%, transparent); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--perch-text) 2.5%, transparent); }
+@media (hover: hover) { tbody tr:hover { background: color-mix(in srgb, var(--perch-accent) 7%, transparent); } }
+
+/* Media */
+img, svg, video { max-width: 100%; height: auto; }
+img { border-radius: 8px; cursor: zoom-in; vertical-align: middle; }
+.emoji, img.emoji { cursor: auto; }
+figure { margin: 0 0 1em; text-align: center; }
+figcaption { color: var(--perch-muted); font-size: .85em; margin-top: .5em; }
+audio, video { max-width: 100%; display: block; margin: 0 0 1em; }
+audio { width: 100%; }
+.embed { aspect-ratio: 16 / 9; margin: 0 0 1em; }
+.embed iframe { width: 100%; height: 100%; border: 0; border-radius: var(--perch-radius); }
+.image-missing { display: inline-block; max-width: 100%; padding: .3em .7em; border: 1px dashed var(--perch-border); border-radius: 8px; color: var(--perch-muted); font-size: .88em; overflow-wrap: anywhere; }
+/* Only the page itself can open this: it hangs off the body, where a note's own markup never is. */
+body > .perch-lightbox { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 16px; background: color-mix(in srgb, #000 78%, transparent); cursor: zoom-out; animation: perch-fade .16s ease; }
+body > .perch-lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: zoom-out; border-radius: 6px; }
+body > .perch-lightbox .sheet { width: 100%; height: 100%; padding: 16px; border-radius: 10px; background: var(--perch-code-bg); color: var(--perch-text); overflow: hidden; display: grid; }
+body > .perch-lightbox .sheet svg { width: 100%; height: 100%; max-width: none; min-height: 0; }
+@keyframes perch-fade { from { opacity: 0; } }
+
+hr { border: 0; height: 1px; background: var(--perch-border); margin: 2.1em 0; }
+
+/* Diagrams, music and maths share one frame. */
+.math-block, .diagram { margin: 0 0 1em; padding: .9em 1em; border: 1px solid var(--perch-border); border-radius: var(--perch-radius); background: var(--perch-code-bg); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.diagram { text-align: center; color: var(--perch-text); }
+.diagram[data-state="done"] { cursor: zoom-in; }
+.diagram svg { max-width: 100%; height: auto; }
+/* Space is held while a diagram is drawn, so the page doesn't jump when it arrives. */
+.diagram[data-state="pending"] { min-height: 9em; display: grid; place-items: center; }
+.diagram[data-state="pending"]::before { content: "Drawing…"; color: var(--perch-muted); font-size: .85em; }
+.diagram[data-kind="abc"] svg { display: block; }
+.diagram[data-state="error"], .math-block:has(> [data-math="error"]) { text-align: left; }
+.math-block { min-height: 3em; }
+.math-block .katex-display { margin: .2em 0; }
+.math-display { display: block; text-align: center; overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+.math-inline { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: bottom; text-indent: 0; }
+.katex { font-size: 1.08em; }
+/* Until a formula is typeset, and when it can't be, its TeX shows as written. */
+.math[data-math="pending"], .math[data-math="error"] { font-family: var(--perch-font-mono); font-size: .86em; color: var(--perch-muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+.math-display[data-math="error"] { text-align: left; }
+.math-inline[data-math="error"] { color: var(--perch-tone-danger); text-decoration: underline wavy color-mix(in srgb, currentColor 50%, transparent); text-underline-offset: .2em; }
+.abc-audio { margin-top: .5em; }
+.abc-audio:empty { display: none; }
+.abc-audio .abcjs-inline-audio { background: var(--perch-surface-strong); border-radius: 8px; height: 32px; padding: 0 8px; }
+.abc-audio .abcjs-inline-audio .abcjs-btn g { fill: var(--perch-text); stroke: var(--perch-text); }
+.abc-audio .abcjs-inline-audio .abcjs-midi-progress-background { background: var(--perch-border); border: 0; height: 6px; border-radius: 3px; }
+.abc-audio .abcjs-inline-audio .abcjs-midi-progress-indicator { background: var(--perch-accent); width: 12px; height: 12px; border-radius: 50%; top: -3px; }
+.abc-audio .abcjs-inline-audio .abcjs-midi-clock { color: var(--perch-muted); font-family: var(--perch-font-mono); font-size: 12px; }
+/* Something that couldn't be drawn: one plain line saying so, and the source underneath, still readable. */
+.render-error { color: var(--perch-tone-danger); font-size: .86em; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0 0 .6em; font-family: var(--perch-font-body); }
+.render-error + pre.source, pre.source { padding: 0; font-family: var(--perch-font-mono); font-size: var(--perch-code-size); color: var(--perch-text-secondary); white-space: pre; text-align: left; }
+
+/* Frontmatter, shown as properties */
+.properties { margin: 0 0 1.5em; border: 1px solid var(--perch-border); border-radius: var(--perch-radius); background: var(--perch-code-bg); font-size: .86em; line-height: 1.45; }
+.properties > summary { display: flex; align-items: center; gap: .5em; padding: .5em .9em; cursor: pointer; color: var(--perch-muted); font-weight: 600; font-size: .86em; letter-spacing: .05em; text-transform: uppercase; list-style: none; user-select: none; -webkit-user-select: none; }
+.properties > summary::-webkit-details-marker { display: none; }
+.properties > summary::before { content: ""; width: .42em; height: .42em; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .16s ease; margin-right: .15em; }
+.properties[open] > summary::before { transform: rotate(45deg); }
+.properties .count { font-weight: 500; letter-spacing: 0; opacity: .75; }
+.properties dl { margin: 0; padding: .1em .9em .7em; display: grid; grid-template-columns: minmax(5em, max-content) minmax(0, 1fr); gap: .35em 1.1em; }
+.properties dt { color: var(--perch-muted); overflow-wrap: anywhere; }
+.properties dd { margin: 0; min-width: 0; overflow-wrap: anywhere; display: flex; flex-wrap: wrap; gap: .3em; }
+.properties .chip { background: var(--perch-surface-strong); border-radius: 99px; padding: .05em .6em; }
+.properties .empty { color: var(--perch-muted); }
+.properties pre { font-size: 1em; padding: 0 .9em .7em; white-space: pre-wrap; }
+:root[data-properties="hidden"] .properties { display: none; }
+
+/* Reading setting: pictures that stand alone in a paragraph run the full width of the page, past the text column.
+   The column is centered, so centering the picture on it centers it on the page. */
+:root[data-images="full"] #root > p > img:only-child:not(.emoji),
+:root[data-images="full"] #root > figure > img {
+  display: block; width: calc(100vw - 2 * var(--perch-pad-inline)); max-width: none;
+  margin-left: 50%; transform: translateX(-50%);
+}
+
+/* Sync conflicts */
+.conflict { border: 1px solid var(--perch-tone-warning); border-radius: var(--perch-radius); margin: 0 0 1em; overflow: hidden; }
+.conflict-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: .4em .85em; background: color-mix(in srgb, var(--perch-tone-warning) 16%, transparent); font-weight: 600; font-size: .88em; }
+.conflict-head button { font: inherit; border: 1px solid var(--perch-tone-warning); color: var(--perch-text); background: transparent; border-radius: 6px; padding: .12em .65em; cursor: pointer; }
+.conflict > div:last-child { padding: .75em .9em .1em; }
+
+/* Footnotes */
+.footnote-ref a { text-decoration: none; font-variant-numeric: tabular-nums; padding: 0 .1em; }
+.footnotes-sep { margin: 2.4em 0 1em; }
+.footnotes { font-size: .88em; color: var(--perch-muted); }
+.footnotes ol { padding-left: 1.4em; }
+.footnotes p { margin-bottom: .4em; }
+.footnote-backref { text-decoration: none; }
+
+/* Reduce Motion: nothing slides, fades or eases. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+@media print {
+  #root { max-width: none; padding: 0; }
+  .abc-audio, .code-copy { display: none; }
+  .math-display, .math-inline, .diagram, .math-block { overflow: visible; }
+  .table-wrap, pre { overflow: visible; }
+  pre code { white-space: pre-wrap; }
+}
+
+/* Small inline renders, such as task details. */
+body.compact { --perch-font-size: 13px; --perch-line-height: 1.55; --perch-measure: none; --perch-pad-inline: 0px; --perch-pad-top: 0px; font-size: 13px; overflow: hidden; }
+body.compact #root { padding: 0 0 4px; max-width: none; }
+body.compact p { margin-bottom: .6em; }
+body.compact { --perch-paragraph-gap: .95em; }
+body.compact .code-copy, body.compact .properties { display: none; }
+body.compact .diagram[data-state="done"] { cursor: auto; }
+body.compact .diagram[data-state="pending"] { min-height: 5em; }

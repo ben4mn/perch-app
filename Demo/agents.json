@@ -1,0 +1,11 @@
+{
+  "here": [
+    { "name": "claude", "status": "Collating the Okafor snag list", "path": "Studio/Clients/Okafor garden room.md" },
+    { "name": "wren", "status": "Checking this week's home admin" }
+  ],
+  "history": [
+    { "agent": "claude", "text": "Proposed “Send the revised drawings to the Lindqvists” as done", "minutesAgo": 38 },
+    { "agent": "wren", "text": "Added to Mum's 70th", "minutesAgo": 125 },
+    { "agent": "claude", "text": "Updated “Collate the snag list from the Okafor site visit”", "minutesAgo": 300 }
+  ]
+}

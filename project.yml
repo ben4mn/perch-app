@@ -1,0 +1,165 @@
+name: Perch
+options:
+  deploymentTarget:
+    macOS: "14.0"
+    iOS: "17.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: false
+# The bundle identifiers, signing, GitHub App, update source and the other values that differ between
+# builds are in Config/Perch.xcconfig (public defaults) and the optional Config/Private.xcconfig.
+# Don't set them here: settings in this file would win over both.
+configFiles:
+  Debug: Config/Perch.xcconfig
+  Release: Config/Perch.xcconfig
+settings:
+  base:
+    MARKETING_VERSION: "0.2.7"
+    CURRENT_PROJECT_VERSION: "10"
+    SWIFT_VERSION: "5.0"
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+packages:
+  Perch:
+    path: .
+targets:
+  PerchMac:
+    type: application
+    platform: macOS
+    sources:
+      - path: Apps/Mac
+        excludes: ["Resources/*.plist", "Resources/*.entitlements", "Resources/PrivacyInfo.xcprivacy"]
+      - path: Apps/Mac/Resources/PrivacyInfo.xcprivacy
+        buildPhase: resources
+      - path: CHANGELOG.md
+        buildPhase: resources
+      - path: Apps/Shared/Web
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: Perch
+        product: PerchKit
+      - package: Perch
+        product: PerchUI
+    settings:
+      base:
+        PRODUCT_NAME: Perch
+        PRODUCT_BUNDLE_IDENTIFIER: $(PERCH_BUNDLE_ID_PREFIX).perch
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Apps/Mac/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Apps/Mac/Resources/Perch.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+        COMBINE_HIDPI_IMAGES: YES
+  PerchPhone:
+    type: application
+    platform: iOS
+    sources:
+      - path: Apps/iOS/App
+      - path: Apps/iOS/Shared
+        excludes: ["PrivacyInfo.xcprivacy"]
+      - path: Apps/iOS/Shared/PrivacyInfo.xcprivacy
+        buildPhase: resources
+      - path: Apps/Shared/Web
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: Perch
+        product: PerchKit
+      - package: Perch
+        product: PerchUI
+      - target: PerchWidgets
+      - target: PerchShare
+    entitlements:
+      path: Apps/iOS/App/Perch.entitlements
+      properties:
+        com.apple.security.application-groups: [$(PERCH_APP_GROUP)]
+    info:
+      path: Apps/iOS/App/Info.plist
+      properties:
+        CFBundleDisplayName: Perch
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UIApplicationSceneManifest: {UIApplicationSupportsMultipleScenes: true}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UIBackgroundModes: [fetch]
+        BGTaskSchedulerPermittedIdentifiers: [$(PRODUCT_BUNDLE_IDENTIFIER).sync]
+        NSSupportsLiveActivities: true
+        NSMicrophoneUsageDescription: Perch records audio notes when you ask it to.
+        ITSAppUsesNonExemptEncryption: false
+        # The build's values (Config/Perch.xcconfig), read by PerchConfiguration.
+        PerchGitHubClientID: $(PERCH_GITHUB_CLIENT_ID)
+        PerchKeychainService: $(PERCH_KEYCHAIN_SERVICE)
+        PerchStandardAreas: $(PERCH_STANDARD_AREAS)
+        PerchPreferredNotebook: $(PERCH_PREFERRED_NOTEBOOK)
+        PerchOwnerID: $(PERCH_OWNER_ID)
+        PerchOtherOwners: $(PERCH_OTHER_OWNERS)
+        PerchDefaultRepositoryOwner: $(PERCH_DEFAULT_REPOSITORY_OWNER)
+        PerchAppGroup: $(PERCH_APP_GROUP)
+        CFBundleURLTypes:
+          - CFBundleURLSchemes: [perch]
+            CFBundleURLName: $(PRODUCT_BUNDLE_IDENTIFIER)
+    settings:
+      base:
+        PRODUCT_NAME: Perch
+        PRODUCT_BUNDLE_IDENTIFIER: $(PERCH_BUNDLE_ID_PREFIX).perch.ios
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: "1,2"
+  PerchWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Apps/iOS/Widgets
+      - path: Apps/iOS/Shared
+        excludes: ["PrivacyInfo.xcprivacy"]
+      - path: Apps/iOS/Shared/PrivacyInfo.xcprivacy
+        buildPhase: resources
+    entitlements:
+      path: Apps/iOS/Widgets/Widgets.entitlements
+      properties:
+        com.apple.security.application-groups: [$(PERCH_APP_GROUP)]
+    info:
+      path: Apps/iOS/Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: Perch
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension: {NSExtensionPointIdentifier: com.apple.widgetkit-extension}
+        PerchAppGroup: $(PERCH_APP_GROUP)
+    settings:
+      base:
+        PRODUCT_NAME: PerchWidgets
+        PRODUCT_BUNDLE_IDENTIFIER: $(PERCH_BUNDLE_ID_PREFIX).perch.ios.widgets
+        TARGETED_DEVICE_FAMILY: "1,2"
+  PerchShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Apps/iOS/Share
+      - path: Apps/iOS/Shared
+        excludes: ["PrivacyInfo.xcprivacy"]
+      - path: Apps/iOS/Shared/PrivacyInfo.xcprivacy
+        buildPhase: resources
+    entitlements:
+      path: Apps/iOS/Share/Share.entitlements
+      properties:
+        com.apple.security.application-groups: [$(PERCH_APP_GROUP)]
+    info:
+      path: Apps/iOS/Share/Info.plist
+      properties:
+        CFBundleDisplayName: Add to Perch
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        PerchAppGroup: $(PERCH_APP_GROUP)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsText: true
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+    settings:
+      base:
+        PRODUCT_NAME: PerchShare
+        PRODUCT_BUNDLE_IDENTIFIER: $(PERCH_BUNDLE_ID_PREFIX).perch.ios.share
+        TARGETED_DEVICE_FAMILY: "1,2"

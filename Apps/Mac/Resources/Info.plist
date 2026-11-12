@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleName</key><string>Perch</string>
+  <key>CFBundleDisplayName</key><string>Perch</string>
+  <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+  <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+  <key>CFBundlePackageType</key><string>APPL</string>
+  <key>CFBundleShortVersionString</key><string>$(MARKETING_VERSION)</string>
+  <key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
+  <key>LSMinimumSystemVersion</key><string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+  <key>LSApplicationCategoryType</key><string>public.app-category.productivity</string>
+  <key>NSMicrophoneUsageDescription</key><string>Perch records audio notes and dictates tasks when you ask it to.</string>
+  <key>NSSpeechRecognitionUsageDescription</key><string>Perch turns your dictation into task text on this Mac.</string>
+  <key>PerchGitHubClientID</key><string>$(PERCH_GITHUB_CLIENT_ID)</string>
+  <key>PerchUpdateRepository</key><string>$(PERCH_UPDATE_REPOSITORY)</string>
+  <key>PerchKeychainService</key><string>$(PERCH_KEYCHAIN_SERVICE)</string>
+  <key>PerchStandardAreas</key><string>$(PERCH_STANDARD_AREAS)</string>
+  <key>PerchPreferredNotebook</key><string>$(PERCH_PREFERRED_NOTEBOOK)</string>
+  <key>PerchOwnerID</key><string>$(PERCH_OWNER_ID)</string>
+  <key>PerchOtherOwners</key><string>$(PERCH_OTHER_OWNERS)</string>
+  <key>PerchAgentMarks</key><string>$(PERCH_AGENT_MARKS)</string>
+  <key>NSCalendarsFullAccessUsageDescription</key><string>Perch shows today's events in the notch. It never changes your calendar.</string>
+</dict>
+</plist>

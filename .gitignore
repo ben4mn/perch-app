@@ -1,0 +1,20 @@
+.DS_Store
+.build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+node_modules/
+.env
+Web/node_modules/
+Perch.xcodeproj/
+Relay/node_modules/
+Relay/dist/
+relay.config.json
+Design/out/
+dist/
+
+# The website clips are made by scripts/site-media.sh and published from their own branch.
+site/media/
+
+# Your own build values (see Config/Perch.xcconfig). Keep them out of Git.
+Config/Private.xcconfig

@@ -1,0 +1,33 @@
+{
+  "projects": [
+    {"id": "p1", "name": "✈️ Acme"},
+    {"id": "p2", "name": "Garden 🌱"},
+    {"id": "p3", "name": "Inbox", "inbox_project": true},
+    {"id": "p4", "name": "Personal"},
+    {"id": "p5", "name": "Consulting"}
+  ],
+  "sections": [{"id": "s1", "name": "This quarter", "project_id": "p1"}],
+  "items": [
+    {"id": "100", "content": "Give Sample Person: feedback (SBI)", "description": "**From:** HR portal\n**Ask:** Give feedback.", "project_id": "p1", "section_id": "s1", "labels": ["alex"], "priority": 3, "due": {"date": "2026-10-13"}, "added_at": "2026-10-09T17:36:00Z"},
+    {"id": "101", "content": "Sub step", "project_id": "p1", "parent_id": "100", "labels": ["pair"], "priority": 1},
+    {"id": "200", "content": "Water the tomatoes", "project_id": "p2", "priority": 4, "due": {"date": "2026-11-08T09:30:00", "is_recurring": true, "string": "every day"}},
+    {"id": "201", "content": "Odd repeat", "project_id": "p2", "due": {"date": "2026-11-08", "is_recurring": true, "string": "every 3rd friday"}},
+    {"id": "300", "content": "Inbox thing", "project_id": "p3", "labels": ["Alex"]},
+    {"id": "400", "content": "Deleted thing", "project_id": "p4", "is_deleted": true},
+    {"id": "500", "content": "Consulting thing", "project_id": "p5"}
+  ],
+  "notes": [
+    {"id": "n1", "item_id": "100", "content": "14 Oct (Helperbot): second request arrived.", "posted_at": "2026-10-14T08:22:00Z"},
+    {"id": "n2", "item_id": "100", "content": "16 Oct triage: window closes today.", "posted_at": "2026-10-16T08:23:00Z"},
+    {"id": "n5", "item_id": "100", "content": "Inbox triage 5 Nov: answered.", "posted_at": "2026-11-05T08:00:00Z"},
+    {"id": "n3", "item_id": "100", "content": "My own note", "posted_at": "2026-10-17T08:23:00Z", "file_attachment": {"file_name": "a.pdf", "file_url": "https://example.com/a.pdf"}},
+    {"id": "n4", "item_id": "100", "content": "Removed", "is_deleted": true}
+  ],
+  "reminders": [
+    {"id": "r1", "item_id": "200", "type": "absolute", "due": {"date": "2026-11-08T09:00:00"}},
+    {"id": "r2", "item_id": "200", "type": "relative", "minute_offset": 30}
+  ],
+  "completed": [
+    {"id": "900", "content": "Finished thing", "project_id": "p1", "completed_at": "2026-09-01T10:00:00Z", "labels": ["alex"]}
+  ]
+}

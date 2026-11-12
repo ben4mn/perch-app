@@ -1,0 +1,12 @@
+# For a Linux server with Docker. The Relay keeps its own clone of the notebook in ./data/vault.
+# Host networking avoids creating another Docker network; the Relay listens on
+# 127.0.0.1 only (set "host" in relay.config.json), and a tunnel or reverse proxy on the same machine reaches it there.
+services:
+  relay:
+    build: .
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./data:/data
+    environment:
+      GIT_SSH_COMMAND: "ssh -i /data/deploy_key -o UserKnownHostsFile=/data/known_hosts -o StrictHostKeyChecking=accept-new"

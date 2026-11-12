@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" font-family="Helvetica, Arial, sans-serif">
+  <rect width="720" height="420" fill="#f6f1e7"/>
+  <g stroke="#cfc6b4" stroke-width="1">
+    <line x1="0" y1="340" x2="720" y2="340"/>
+  </g>
+  <!-- ground and gravel strip -->
+  <rect x="96" y="300" width="528" height="14" fill="#b9ad97"/>
+  <line x1="40" y1="314" x2="680" y2="314" stroke="#5b5346" stroke-width="2"/>
+  <!-- the room -->
+  <rect x="120" y="96" width="480" height="204" fill="#d8b98c" stroke="#3d3428" stroke-width="2.5"/>
+  <g stroke="#b8945f" stroke-width="1.2"><line x1="132" y1="96" x2="132" y2="300" /><line x1="148" y1="96" x2="148" y2="300" /><line x1="164" y1="96" x2="164" y2="300" /><line x1="180" y1="96" x2="180" y2="300" /><line x1="196" y1="96" x2="196" y2="300" /><line x1="212" y1="96" x2="212" y2="300" /><line x1="228" y1="96" x2="228" y2="300" /><line x1="244" y1="96" x2="244" y2="300" /><line x1="260" y1="96" x2="260" y2="300" /><line x1="276" y1="96" x2="276" y2="300" /><line x1="292" y1="96" x2="292" y2="300" /><line x1="484" y1="96" x2="484" y2="300" /><line x1="500" y1="96" x2="500" y2="300" /><line x1="516" y1="96" x2="516" y2="300" /><line x1="580" y1="96" x2="580" y2="300" /><line x1="596" y1="96" x2="596" y2="300" /></g>
+  <!-- parapet and roof edge -->
+  <rect x="112" y="80" width="496" height="16" fill="#4a4036"/>
+  <!-- glazed doors -->
+  <rect x="300" y="122" width="170" height="178" fill="#a9c6d3" stroke="#3d3428" stroke-width="2.5"/>
+  <line x1="385" y1="122" x2="385" y2="300" stroke="#3d3428" stroke-width="2.5"/>
+  <line x1="312" y1="140" x2="350" y2="200" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+  <line x1="398" y1="140" x2="436" y2="200" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+  <!-- side window -->
+  <rect x="520" y="112" width="52" height="170" fill="#a9c6d3" stroke="#3d3428" stroke-width="2.5"/>
+  <!-- light over the door -->
+  <circle cx="385" cy="110" r="4" fill="#3d3428"/>
+  <!-- dimensions -->
+  <g stroke="#3d3428" stroke-width="1" fill="none">
+    <line x1="120" y1="364" x2="600" y2="364"/>
+    <line x1="120" y1="356" x2="120" y2="372"/>
+    <line x1="600" y1="356" x2="600" y2="372"/>
+    <line x1="648" y1="80" x2="648" y2="314"/>
+    <line x1="640" y1="80" x2="656" y2="80"/>
+    <line x1="640" y1="314" x2="656" y2="314"/>
+  </g>
+  <g fill="#3d3428" font-size="15">
+    <text x="360" y="388" text-anchor="middle">4800</text>
+    <text x="664" y="202" transform="rotate(90 664 202)" text-anchor="middle">2500</text>
+    <text x="40" y="46" font-size="18" font-weight="bold">Okafor garden room</text>
+    <text x="40" y="66" font-size="13">Front elevation, facing the house. Larch, vertical, open joint.</text>
+  </g>
+</svg>
